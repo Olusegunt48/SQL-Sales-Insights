@@ -19,18 +19,26 @@ WHERE transaction_time LIKE '%:%:%';
 ALTER TABLE coffee_shop_sales
 MODIFY COLUMN transaction_time TIME;
 
-SELECT ROUND(sum(unit_price * transaction_qty)) AS Total_sales
-from coffee_shop_sales
-where month(transaction_date) = 2;
+SELECT 
+	ROUND(sum(unit_price * transaction_qty)) AS Total_sales
+from 
+	coffee_shop_sales
+where 
+	month(transaction_date) = 2;
 
 SELECT * FROM coffee_shop_sales;
 
 -- Calculate the total sales for each respective month
-select MONTH(transaction_date) as month, round(sum(unit_price * transaction_qty)) as Total_Sales
-from coffee_shop_sales
-where MONTH(transaction_date) IN (1,2,3,4,5,6,7,8,9,10,11,12) -- For each month
-GROUP BY MONTH(transaction_date)
-ORDER BY MONTH(transaction_date);
+select 
+	MONTH(transaction_date) as month, round(sum(unit_price * transaction_qty)) as Total_Sales
+from 
+	coffee_shop_sales
+where 
+	MONTH(transaction_date) IN (1,2,3,4,5,6,7,8,9,10,11,12) -- For each month
+GROUP BY 
+	MONTH(transaction_date)
+ORDER BY 
+	MONTH(transaction_date);
 
 
 -- Determine the MoM increase or decrease in sales and in percentage
@@ -54,10 +62,14 @@ ORDER BY
     
 -- Calculate total orders for each month
 
-SELECT MONTH(transaction_date), COUNT(transaction_id) as Total_orders
-from coffee_shop_sales
-where month(transaction_date) IN (1,2,3,4,5,6,7)
-GROUP BY MONTH(transaction_date);
+SELECT 
+	MONTH(transaction_date), COUNT(transaction_id) as Total_orders
+from 
+	coffee_shop_sales
+where 
+	month(transaction_date) IN (1,2,3,4,5,6,7)
+GROUP BY 
+	MONTH(transaction_date);
 
 SELECT * FROM coffee_shop_sales;
 
@@ -100,9 +112,12 @@ SELECT
     CONCAT(ROUND(SUM(unit_price * transaction_qty)/1000,1),'K') as Total_sales,
     CONCAT(ROUND(SUM(transaction_qty)/1000,1),'K')  as Total_QTY_Sold,
     ROUND(COUNT(transaction_id)) as Total_order
-FROM coffee_shop_sales
-WHERE MONTH(transaction_date) = 3
-GROUP BY DAY(transaction_date);
+FROM 
+	coffee_shop_sales
+WHERE 
+	MONTH(transaction_date) = 3
+GROUP BY 
+	DAY(transaction_date);
 
 SELECT
 	CASE WHEN DAYOFWEEK(transaction_date) IN (1,7) THEN 'Weekends'
